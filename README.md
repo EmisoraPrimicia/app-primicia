@@ -111,43 +111,110 @@ Verifica el código con ESLint.
 
 ## 📁 Estructura del Proyecto
 
-\`\`\`
-app-primicia/
-├── app/                          # Aplicación React
-│   ├── src/
-│   │   ├── features/            # Módulos de funcionalidades
-│   │   │   ├── agenda/          # Gestión de agenda
-│   │   │   ├── auth/            # Autenticación
-│   │   │   ├── campanas/        # Campañas publicitarias
-│   │   │   ├── clientes/        # Gestión de clientes
-│   │   │   ├── configuracion/   # Panel de configuración
-│   │   │   ├── dashboard/       # Dashboard principal
-│   │   │   ├── locutores/       # Administración de locutores
-│   │   │   ├── programas/       # Gestión de programas
-│   │   │   └── shared/          # Componentes compartidos
-│   │   ├── layout/              # Componentes de layout
-│   │   ├── routes/              # Rutas de la aplicación
-│   │   ├── services/            # Servicios HTTP
-│   │   ├── core/                # Funcionalidades core
-│   │   │   ├── components/      # Componentes reutilizables
-│   │   │   ├── helpers/         # Funciones auxiliares
-│   │   │   └── hooks/           # Custom React hooks
-│   │   ├── lib/                 # Librerías y constantes
-│   │   ├── pages/               # Páginas principales
-│   │   ├── assets/              # Recursos estáticos
-│   │   ├── styles/              # Estilos globales
-│   │   ├── App.jsx              # Componente raíz
-│   │   └── main.jsx             # Punto de entrada
-│   ├── public/                  # Archivos públicos
-│   │   ├── themes/              # Temas disponibles
-│   │   ├── layout/              # Recursos de layout
-│   │   └── demo/                # Datos de demostración
-│   ├── vite.config.js
-│   ├── package.json
-│   └── eslint.config.js
-└── sakai-react/                 # Template base (referencia)
+### Carpeta Principal: `app/`
 
-\`\`\`
+```
+📦 app/
+```
+
+#### Archivos de Configuración
+
+| Archivo | Descripción |
+|---------|------------|
+| `package.json` | Dependencias y scripts del proyecto |
+| `vite.config.js` | Configuración de Vite |
+| `eslint.config.js` | Reglas de ESLint |
+| `index.html` | Archivo HTML principal |
+
+#### 📂 Carpeta `src/` - Código Fuente
+
+```
+src/
+├── 📁 features/              Módulos de funcionalidades
+│   ├── agenda/              Gestión de agenda
+│   ├── auth/                Autenticación y login
+│   ├── campanas/            Campañas publicitarias
+│   ├── clientes/            Gestión de clientes
+│   ├── configuracion/       Panel de configuración
+│   ├── dashboard/           Dashboard principal
+│   ├── locutores/           Administración de locutores
+│   ├── programas/           Gestión de programas
+│   └── shared/              Componentes compartidos
+│
+├── 📁 layout/               Componentes de layout
+│   ├── AppConfig.tsx
+│   ├── AppFooter.tsx
+│   ├── AppMenu.tsx
+│   ├── AppMenuitem.tsx
+│   ├── AppSidebar.tsx
+│   ├── AppTopbar.tsx
+│   └── context/             Context API para layout
+│
+├── 📁 routes/               Configuración de rutas
+│   ├── index.js
+│   ├── public.routes.jsx    Rutas públicas
+│   ├── superadmin.routes.jsx Rutas de SuperAdmin
+│   └── usuario.routes.jsx   Rutas de usuarios
+│
+├── 📁 core/                 Funcionalidades core
+│   ├── components/          Componentes reutilizables
+│   ├── helpers/             Funciones auxiliares
+│   └── hooks/               Custom React hooks
+│
+├── 📁 lib/                  Librerías y utilidades
+│   ├── constants/           Constantes globales
+│   └── types/               Definiciones de tipos
+│
+├── 📁 pages/                Páginas principales
+│   ├── Landing.jsx          Página de inicio
+│   ├── LoadingScreen.jsx    Pantalla de carga
+│   └── NotFound.jsx         Página 404
+│
+├── 📁 services/             Servicios HTTP
+│
+├── 📁 assets/               Recursos (imágenes, iconos)
+│
+├── 📁 styles/               Estilos globales
+│
+├── 📁 types/                Tipos TypeScript globales
+│
+├── App.jsx                  Componente raíz
+├── main.jsx                 Punto de entrada
+└── index.css                Estilos globales
+```
+
+#### 📂 Carpeta `public/` - Archivos Estáticos
+
+```
+public/
+├── robots.txt               SEO - robots
+├── sitemap.xml              Mapa del sitio
+├── 📁 themes/               Temas visuales disponibles
+├── 📁 layout/               Recursos de layout
+└── 📁 demo/                 Datos de demostración
+    └── images/              Imágenes de demo
+```
+
+#### 📂 Carpeta `styles/` - Estilos SCSS
+
+```
+styles/
+└── 📁 demo/                 Estilos de componentes demo
+    ├── badges.scss
+    ├── BlockViewer.scss
+    ├── code.scss
+    ├── Demos.scss
+    └── TimelineDemo.scss
+└── 📁 layout/               Estilos de layout
+    ├── _config.scss
+    ├── _content.scss
+    ├── _footer.scss
+    ├── _main.scss
+    ├── _menu.scss
+    ├── _responsive.scss
+    ├── _topbar.scss
+    └── más...
+```
 
 ---
 
