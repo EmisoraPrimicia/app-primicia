@@ -2,19 +2,18 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import Layout from '../layout/layout';
 import { LayoutProvider } from '../layout/context/layoutcontext';
+import { useAuth } from '../context/AuthContext';
 
-// Guard de rol para SuperAdministrador
 const GuardSuperAdmin = () => {
-    const token = localStorage.getItem('token');
-    const rol = localStorage.getItem('rol');
+    const { usuario, rol, cargando } = useAuth();
 
-    if (!token) return <Navigate to="/login" replace />;
+    if (cargando) return null;
+    if (!usuario && !localStorage.getItem('token')) return <Navigate to="/login" replace />;
     if (rol !== 'SuperAdministrador') return <Navigate to="/sin-acceso" replace />;
 
     return <Outlet />;
 };
 
-// Shell visual con el layout de la emisora
 const AdminShell = () => (
     <LayoutProvider>
         <Layout />
@@ -41,16 +40,12 @@ export const rutasSuperAdmin = [
                         lazy: () => import('../features/locutores/pages/Locutores').then((m) => ({ Component: m.default })),
                     },
                     {
-                        path: '/admin/campanas',
-                        lazy: () => import('../features/campanas/pages/Campanas').then((m) => ({ Component: m.default })),
+                        path: '/admin/noticias',
+                        lazy: () => import('../features/noticias/pages/Noticias').then((m) => ({ Component: m.default })),
                     },
                     {
                         path: '/admin/agenda',
                         lazy: () => import('../features/agenda/pages/Agenda').then((m) => ({ Component: m.default })),
-                    },
-                    {
-                        path: '/admin/clientes',
-                        lazy: () => import('../features/clientes/pages/Clientes').then((m) => ({ Component: m.default })),
                     },
                     {
                         path: '/admin/configuracion',

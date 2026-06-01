@@ -6,6 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
+import authService from '@/features/auth/services/authService';
 
 const VERDE    = '#3a7d1e';
 const AMARILLO = '#f5c518';
@@ -19,8 +20,8 @@ const ResetPassword = () => {
     const [error,    setError]    = useState('');
 
     const validar = () => {
-        if (!email.trim()) { setError('El correo es requerido'); return false; }
-        if (!/\S+@\S+\.\S+/.test(email)) { setError('Correo no válido'); return false; }
+        if (!email.trim())                    { setError('El correo es requerido'); return false; }
+        if (!/\S+@\S+\.\S+/.test(email))      { setError('Correo no válido');       return false; }
         setError('');
         return true;
     };
@@ -31,16 +32,14 @@ const ResetPassword = () => {
 
         setCargando(true);
         try {
-            // TODO: reemplazar con llamada real al API
-            // await authService.solicitarReset({ email });
-            await new Promise((r) => setTimeout(r, 1000));
+            await authService.solicitarReset(email);
             setEnviado(true);
-        } catch {
+        } catch (err) {
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'No se pudo enviar el correo. Inténtalo de nuevo.',
-                life: 4000,
+                summary:  'Error',
+                detail:   err.message ?? 'No se pudo enviar el correo. Inténtalo de nuevo.',
+                life:     4000,
             });
         } finally {
             setCargando(false);
@@ -54,7 +53,8 @@ const ResetPassword = () => {
 
             <div className="surface-card border-round-2xl shadow-4 p-5 lg:p-7 w-full" style={{ maxWidth: 440 }}>
                 <div className="flex justify-content-center mb-5">
-                    <img src="/emisora.png" alt="Emisora Comunal del Cesar" style={{ height: 70, objectFit: 'contain' }} />
+                    <img src="/emisora.png" alt="Emisora Comunal del Cesar"
+                        style={{ height: 70, objectFit: 'contain' }} />
                 </div>
 
                 {!enviado ? (

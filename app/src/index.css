@@ -1,10 +1,38 @@
 /* ── 1. Tema PrimeReact PRIMERO — define las CSS vars que usa el layout SCSS ── */
-@import 'primereact/resources/themes/lara-light-indigo/theme.css';
+@import 'primereact/resources/themes/lara-light-green/theme.css';
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 
 /* ── 2. Tipografía ── */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ── Paleta Emisora Digital del Cesar ── */
+:root {
+  /* Verde institucional */
+  --emisora-verde:        #3a7d1e;
+  --emisora-verde-dark:   #1a3a0a;
+  --emisora-verde-darker: #0d1f06;
+  --emisora-verde-light:  #4d9e28;
+  --emisora-verde-muted:  rgba(58,125,30,.15);
+
+  /* Dorado / acento */
+  --emisora-amarillo:     #f5c518;
+  --emisora-amarillo-bg:  rgba(245,197,24,.12);
+
+  /* Override PrimeReact primary → verde emisora */
+  --primary-color:        #3a7d1e;
+  --primary-color-text:   #ffffff;
+  --primary-50:           #f0f7ec;
+  --primary-100:          #cce5ba;
+  --primary-200:          #a3ce84;
+  --primary-300:          #7aba52;
+  --primary-400:          #56a52e;
+  --primary-500:          #3a7d1e;
+  --primary-600:          #2f6518;
+  --primary-700:          #234d12;
+  --primary-800:          #17360c;
+  --primary-900:          #0c1f06;
+}
 
 /* ── 3. Prevenir scroll horizontal en móviles ── */
 html, body {

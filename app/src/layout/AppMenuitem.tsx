@@ -32,7 +32,7 @@ const AppMenuitem = (props) => {
         else setActiveMenu(key);
     };
 
-    const subMenu = item.items && item.visible !== false && active && (
+    const subMenu = item.items && item.visible !== false && (props.root || active) && (
         <ul>
             {item.items.map((child, i) => (
                 <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key} key={child.label} />

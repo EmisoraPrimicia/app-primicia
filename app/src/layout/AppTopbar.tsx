@@ -3,9 +3,11 @@ import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LayoutContext } from './context/layoutcontext';
+import { useAuth } from '../context/AuthContext';
 
 const AppTopbar = forwardRef((props, ref) => {
     const { layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
+    const { logout, usuario } = useAuth();
     const menubuttonRef = useRef(null);
     const topbarmenuRef = useRef(null);
     const topbarmenubuttonRef = useRef(null);
@@ -18,9 +20,7 @@ const AppTopbar = forwardRef((props, ref) => {
     }));
 
     const cerrarSesion = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('rol');
-        localStorage.removeItem('usuario');
+        logout();
         navigate('/login');
     };
 

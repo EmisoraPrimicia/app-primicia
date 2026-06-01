@@ -1,18 +1,3 @@
-import React from 'react';
-
-// TODO: Implementar componente MiPerfil completo
-// En desarrollo...
-
-export default function MiPerfil() {
-  return (
-    <div className="p-4">
-      <h1 className="text-900 text-3xl font-bold mb-2">Mi Perfil</h1>
-      <p className="text-600">Página de perfil en desarrollo.</p>
-    </div>
-  );
-}
-
-/* Código original comentado — descomentar cuando esté listo
 // import { useEffect, useRef, useState } from 'react';
 // import { Avatar } from 'primereact/avatar';
 // import { Button } from 'primereact/button';
@@ -180,7 +165,7 @@ export default function MiPerfil() {
 //     <div className="p-4 md:p-5">
 //       <Toast ref={toast} />
 
-//       {/* Contenido lado a lado */
+//       {/* Contenido lado a lado */}
 //       <div className="flex gap-4 align-items-start" style={{ flexWrap: 'wrap' }}>
 //         {/* Datos personales — crece */}
 //         <div style={{ flex: '1 1 400px', minWidth: 0 }}>
