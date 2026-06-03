@@ -14,6 +14,7 @@ import { Toast } from 'primereact/toast';
 import locutoresService from '../../locutores/services/locutoresService';
 import ImageUpload from '../../shared/components/ImageUpload';
 import programasService from '../services/programasService';
+import { useAuth } from '../../../context/AuthContext';
 
 const VERDE    = '#3a7d1e';
 const AMARILLO = '#f5c518';
@@ -128,6 +129,8 @@ function ParrillaSemanal({ data, semanaDate, onSemanaChange }) {
 
 /* ── Página principal ──────────────────────────────────────────── */
 export default function Programas() {
+    const { rol }  = useAuth();
+    const esAdmin  = rol === 'SuperAdministrador';
     const toast     = useRef(null);
     const [vista,     setVista]     = useState('lista');
     const [lista,     setLista]     = useState([]);
@@ -315,8 +318,10 @@ export default function Programas() {
                                     <div className="flex gap-2">
                                         <Button icon="pi pi-pencil" rounded text size="small"
                                             style={{ color: VERDE }} onClick={() => abrirEditar(r)} />
-                                        <Button icon="pi pi-trash" rounded text size="small"
-                                            className="p-button-danger" onClick={() => confirmarEliminar(r)} />
+                                        {esAdmin && (
+                                            <Button icon="pi pi-trash" rounded text size="small"
+                                                className="p-button-danger" onClick={() => confirmarEliminar(r)} />
+                                        )}
                                     </div>
                                 )} />
                         </DataTable>

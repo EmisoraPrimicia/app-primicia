@@ -44,7 +44,7 @@ const AppMenu = () => {
         },
     ];
 
-    const menuUsuario = [
+    const menuLocutor = [
         {
             label: 'Principal',
             items: [
@@ -54,7 +54,8 @@ const AppMenu = () => {
         {
             label: 'Contenido',
             items: [
-                { label: 'Programas', icon: 'pi pi-fw pi-th-large', to: '/app/programas' },
+                { label: 'Programas', icon: 'pi pi-fw pi-th-large',  to: '/app/programas' },
+                { label: 'Noticias',  icon: 'pi pi-fw pi-file-edit', to: '/app/noticias'  },
             ],
         },
         {
@@ -64,14 +65,41 @@ const AppMenu = () => {
             ],
         },
         {
-            label: 'Sesión',
+            label: 'Mi cuenta',
             items: [
+                { label: 'Mi Perfil',     icon: 'pi pi-fw pi-user',     to: '/app/perfil'   },
                 { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-sign-out', command: handleLogout },
             ],
         },
     ];
 
-    const model = rol === 'SuperAdministrador' ? menuAdmin : menuUsuario;
+    const menuUsuario = [
+        {
+            label: 'Principal',
+            items: [
+                { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/app' },
+            ],
+        },
+        {
+            label: 'Operaciones',
+            items: [
+                { label: 'Agenda', icon: 'pi pi-fw pi-calendar', to: '/app/agenda' },
+            ],
+        },
+        {
+            label: 'Mi cuenta',
+            items: [
+                { label: 'Mi Perfil',     icon: 'pi pi-fw pi-user',     to: '/app/perfil'   },
+                { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-sign-out', command: handleLogout },
+            ],
+        },
+    ];
+
+    const model = rol === 'SuperAdministrador'
+        ? menuAdmin
+        : rol === 'Locutor'
+            ? menuLocutor
+            : menuUsuario;
 
     return (
         <MenuProvider>

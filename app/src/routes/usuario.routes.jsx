@@ -36,6 +36,10 @@ export const rutasUsuario = [
                         lazy: () => import('../features/programas/pages/Programas').then((m) => ({ Component: m.default })),
                     },
                     {
+                        path: '/app/noticias',
+                        lazy: () => import('../features/noticias/pages/Noticias').then((m) => ({ Component: m.default })),
+                    },
+                    {
                         path: '/app/agenda',
                         lazy: () => import('../features/agenda/pages/Agenda').then((m) => ({ Component: m.default })),
                     },
