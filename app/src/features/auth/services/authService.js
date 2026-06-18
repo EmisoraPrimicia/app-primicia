@@ -12,6 +12,12 @@ const authService = {
 
     me: () =>
         apiClient.get('/auth/me'),
+
+    actualizarPerfil: (nombre, email) =>
+        apiClient.patch('/auth/me', { nombre, email }),
+
+    cambiarPassword: (password_actual, nueva_password) =>
+        apiClient.patch('/auth/cambiar-password', { password_actual, nueva_password }),
 };
 
 export default authService;

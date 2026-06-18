@@ -24,9 +24,23 @@ const AppTopbar = forwardRef((props, ref) => {
         navigate('/login');
     };
 
+    const irAPerfil = () => {
+        const rol = usuario?.role_code ?? localStorage.getItem('rol');
+        if (rol === 'SuperAdministrador') navigate('/admin/perfil');
+        else if (rol === 'Locutor')       navigate('/locutor/perfil');
+        else                              navigate('/app/perfil');
+    };
+
+    const logoDestino = (() => {
+        const rol = usuario?.role_code ?? localStorage.getItem('rol');
+        if (rol === 'SuperAdministrador') return '/admin';
+        if (rol === 'Locutor')            return '/locutor';
+        return '/app';
+    })();
+
     return (
         <div className="layout-topbar">
-            <Link to="/admin" className="layout-topbar-logo">
+            <Link to={logoDestino} className="layout-topbar-logo">
                 <img src="/emisora.png" alt="Emisora Comunal del Cesar" style={{ height: 44, width: 'auto', objectFit: 'contain' }} />
             </Link>
 
@@ -39,7 +53,7 @@ const AppTopbar = forwardRef((props, ref) => {
             </button>
 
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
-                <button type="button" className="p-link layout-topbar-button">
+                <button type="button" className="p-link layout-topbar-button" onClick={irAPerfil}>
                     <i className="pi pi-user"></i>
                     <span>Perfil</span>
                 </button>

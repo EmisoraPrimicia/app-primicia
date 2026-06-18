@@ -24,21 +24,23 @@ const AppMenu = () => {
         {
             label: 'Contenido',
             items: [
-                { label: 'Programas',  icon: 'pi pi-fw pi-th-large',  to: '/admin/programas' },
-                { label: 'Locutores',  icon: 'pi pi-fw pi-microphone', to: '/admin/locutores' },
-                { label: 'Noticias',   icon: 'pi pi-fw pi-file-edit',  to: '/admin/noticias'  },
+                { label: 'Programas',   icon: 'pi pi-fw pi-th-large',   to: '/admin/programas'   },
+                { label: 'Locutores',   icon: 'pi pi-fw pi-microphone',  to: '/admin/locutores'   },
+                { label: 'Noticias',    icon: 'pi pi-fw pi-file-edit',   to: '/admin/noticias'    },
+                { label: 'Documentos',  icon: 'pi pi-fw pi-file-pdf',    to: '/admin/documentos'  },
             ],
         },
         {
             label: 'Operaciones',
             items: [
-                { label: 'Agenda', icon: 'pi pi-fw pi-calendar', to: '/admin/agenda' },
+                { label: 'Eventos', icon: 'pi pi-fw pi-calendar', to: '/admin/agenda' },
             ],
         },
         {
             label: 'Sistema',
             items: [
                 { label: 'Configuración',  icon: 'pi pi-fw pi-cog',      to: '/admin/configuracion' },
+                { label: 'Mi Perfil',      icon: 'pi pi-fw pi-user',      to: '/admin/perfil'        },
                 { label: 'Cerrar Sesión',  icon: 'pi pi-fw pi-sign-out', command: handleLogout },
             ],
         },
@@ -48,26 +50,20 @@ const AppMenu = () => {
         {
             label: 'Principal',
             items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/app' },
+                { label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/locutor' },
             ],
         },
         {
-            label: 'Contenido',
+            label: 'Mi contenido',
             items: [
-                { label: 'Programas', icon: 'pi pi-fw pi-th-large',  to: '/app/programas' },
-                { label: 'Noticias',  icon: 'pi pi-fw pi-file-edit', to: '/app/noticias'  },
-            ],
-        },
-        {
-            label: 'Operaciones',
-            items: [
-                { label: 'Agenda', icon: 'pi pi-fw pi-calendar', to: '/app/agenda' },
+                { label: 'Programas', icon: 'pi pi-fw pi-th-large', to: '/locutor/programas' },
+                { label: 'Eventos',   icon: 'pi pi-fw pi-calendar', to: '/locutor/eventos'   },
             ],
         },
         {
             label: 'Mi cuenta',
             items: [
-                { label: 'Mi Perfil',     icon: 'pi pi-fw pi-user',     to: '/app/perfil'   },
+                { label: 'Mi Perfil',     icon: 'pi pi-fw pi-user',     to: '/locutor/perfil' },
                 { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-sign-out', command: handleLogout },
             ],
         },

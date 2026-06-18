@@ -59,12 +59,12 @@ function ButtPanel({ config, cargando }) {
                 <div className="flex align-items-center gap-2 mb-1">
                     <i className="pi pi-headphones text-xl" style={{ color: AMARILLO }} />
                     <h2 className="text-900 font-bold m-0" style={{ fontSize: '1.1rem' }}>
-                        Datos para B.U.T.T.
+                        Configuración Global de Transmisión
                     </h2>
                 </div>
                 <p className="text-500 text-sm m-0 mb-3">
-                    Ingresa estos datos en tu aplicación <strong>BUTT</strong> para que se conecte
-                    al servidor de la emisora y puedas transmitir en vivo.
+                    Ingresa estos datos en tu software de transmisión para conectarte
+                    al servidor de la emisora y transmitir en vivo.
                 </p>
                 {fila('Host / Servidor', config?.icecast_host)}
                 {fila('Puerto',          config?.icecast_port)}

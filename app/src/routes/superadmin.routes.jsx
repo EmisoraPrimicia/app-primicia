@@ -51,6 +51,14 @@ export const rutasSuperAdmin = [
                         path: '/admin/configuracion',
                         lazy: () => import('../features/configuracion/pages/Configuracion').then((m) => ({ Component: m.default })),
                     },
+                    {
+                        path: '/admin/documentos',
+                        lazy: () => import('../features/documentos/pages/Documentos').then((m) => ({ Component: m.default })),
+                    },
+                    {
+                        path: '/admin/perfil',
+                        lazy: () => import('../features/shared/pages/MiPerfil').then((m) => ({ Component: m.default })),
+                    },
                 ],
             },
         ],

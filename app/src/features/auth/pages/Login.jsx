@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -16,7 +16,15 @@ const AMARILLO = '#f5c518';
 const Login = () => {
     const navigate  = useNavigate();
     const toast     = useRef(null);
-    const { login } = useAuth();
+    const { login, usuario, rol, cargando: authCargando } = useAuth();
+
+    useEffect(() => {
+        if (!authCargando && usuario) {
+            if (rol === 'SuperAdministrador') navigate('/admin', { replace: true });
+            else if (rol === 'Locutor')       navigate('/locutor', { replace: true });
+            else                              navigate('/app', { replace: true });
+        }
+    }, [authCargando, usuario, rol, navigate]);
 
     const [email,    setEmail]    = useState('');
     const [password, setPassword] = useState('');
@@ -43,6 +51,7 @@ const Login = () => {
             const rol  = data.usuario.role_code;
 
             if (rol === 'SuperAdministrador') navigate('/admin');
+            else if (rol === 'Locutor')       navigate('/locutor');
             else                              navigate('/app');
         } catch (err) {
             toast.current?.show({

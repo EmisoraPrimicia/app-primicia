@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
 import Landing from '../pages/Landing';
 import NotFound from '../pages/NotFound';
 
@@ -7,6 +6,10 @@ export const rutasPublicas = [
     {
         path: '/',
         element: <Landing />,
+    },
+    {
+        path: '/documentos',
+        lazy: () => import('../features/documentos/pages/DocumentosPublico').then((m) => ({ Component: m.default })),
     },
     {
         path: '/login',

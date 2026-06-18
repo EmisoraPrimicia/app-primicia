@@ -22,6 +22,28 @@ export function AuthProvider({ children }) {
             .finally(() => setCargando(false));
     }, []);
 
+    // Sincronización entre pestañas: reacciona cuando otra pestaña hace login o logout
+    useEffect(() => {
+        const handleStorage = (e) => {
+            if (e.key !== 'token') return;
+            if (!e.newValue) {
+                setUsuario(null);
+                localStorage.removeItem('rol');
+                localStorage.removeItem('usuario');
+            } else {
+                authService.me()
+                    .then((data) => {
+                        setUsuario(data);
+                        localStorage.setItem('usuario', JSON.stringify(data));
+                        localStorage.setItem('rol', data.role_code);
+                    })
+                    .catch(() => setUsuario(null));
+            }
+        };
+        window.addEventListener('storage', handleStorage);
+        return () => window.removeEventListener('storage', handleStorage);
+    }, []);
+
     const login = useCallback(async (credentials) => {
         const data = await authService.login(credentials);
         localStorage.setItem('token', data.access_token);
@@ -38,10 +60,19 @@ export function AuthProvider({ children }) {
         setUsuario(null);
     }, []);
 
+    const recargarUsuario = useCallback(async () => {
+        try {
+            const data = await authService.me();
+            setUsuario(data);
+            localStorage.setItem('usuario', JSON.stringify(data));
+            return data;
+        } catch { /* ignorar */ }
+    }, []);
+
     const rol = usuario?.role_code ?? localStorage.getItem('rol');
 
     return (
-        <AuthContext.Provider value={{ usuario, rol, cargando, login, logout }}>
+        <AuthContext.Provider value={{ usuario, rol, cargando, login, logout, recargarUsuario }}>
             {children}
         </AuthContext.Provider>
     );

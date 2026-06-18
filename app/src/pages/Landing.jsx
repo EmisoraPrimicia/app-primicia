@@ -68,7 +68,9 @@ const Landing = () => {
     const [locutores,      setLocutores]      = useState([]);
     const [cargandoLoc,    setCargandoLoc]    = useState(true);
     const [noticias,       setNoticias]       = useState([]);
+    const [cargandoNot,    setCargandoNot]    = useState(true);
     const [eventos,        setEventos]        = useState([]);
+    const [cargandoEv,     setCargandoEv]     = useState(true);
 
     /* ── Cargar parrilla de una semana específica ── */
     const cargarParrilla = useCallback(async (offset = 0) => {
@@ -106,17 +108,17 @@ const Landing = () => {
             setLocutores(lista.slice(0, 6));
         } catch { /* sin acceso o sin locutores */ } finally { setCargandoLoc(false); }
 
-        /* 4. Noticias recientes (endpoint público — todas, incluidas borradores) */
+        /* 4. Noticias recientes */
         try {
             const res = await apiFetch('/noticias?tamano=4&pagina=1');
             setNoticias(Array.isArray(res) ? res : (res.data ?? []));
-        } catch { /* sin noticias o endpoint no disponible */ }
+        } catch { setNoticias([]); } finally { setCargandoNot(false); }
 
         /* 5. Próximos eventos */
         try {
             const res = await apiFetch('/eventos/proximos?limite=4');
             setEventos(Array.isArray(res) ? res : (res.data ?? []));
-        } catch { /* sin eventos próximos */ }
+        } catch { setEventos([]); } finally { setCargandoEv(false); }
     }, [cargarParrilla]);
 
     useEffect(() => { cargarDatos(); }, [cargarDatos]);
@@ -205,10 +207,11 @@ const Landing = () => {
     };
 
     const seccionesNav = [
-        { etiqueta: 'Inicio',       href: '#inicio'       },
-        { etiqueta: 'Programación', href: '#programacion' },
-        { etiqueta: 'Locutores',    href: '#locutores'    },
-        { etiqueta: 'Contáctenos',  href: '#contacto'     },
+        { etiqueta: 'Inicio',       href: '#inicio',       ruta: null },
+        { etiqueta: 'Programación', href: '#programacion', ruta: null },
+        { etiqueta: 'Locutores',    href: '#locutores',    ruta: null },
+        { etiqueta: 'Documentos',   href: null,            ruta: '/documentos' },
+        { etiqueta: 'Contáctenos',  href: '#contacto',     ruta: null },
     ];
 
     return (
@@ -230,13 +233,24 @@ const Landing = () => {
                     </div>
                     <nav className="hidden lg:flex align-items-center gap-5">
                         {seccionesNav.map((item) => (
-                            <a key={item.href} href={item.href}
-                                className="p-ripple font-medium no-underline"
-                                style={{ color: '#333', transition: 'color .2s' }}
-                                onMouseEnter={e => e.target.style.color = VERDE}
-                                onMouseLeave={e => e.target.style.color = '#333'}>
-                                {item.etiqueta}<Ripple />
-                            </a>
+                            item.ruta ? (
+                                <button key={item.ruta}
+                                    className="p-ripple font-medium border-none bg-transparent cursor-pointer p-0"
+                                    style={{ color: '#333', transition: 'color .2s', fontFamily: 'inherit', fontSize: 'inherit' }}
+                                    onMouseEnter={e => e.currentTarget.style.color = VERDE}
+                                    onMouseLeave={e => e.currentTarget.style.color = '#333'}
+                                    onClick={() => navigate(item.ruta)}>
+                                    {item.etiqueta}<Ripple />
+                                </button>
+                            ) : (
+                                <a key={item.href} href={item.href}
+                                    className="p-ripple font-medium no-underline"
+                                    style={{ color: '#333', transition: 'color .2s' }}
+                                    onMouseEnter={e => e.target.style.color = VERDE}
+                                    onMouseLeave={e => e.target.style.color = '#333'}>
+                                    {item.etiqueta}<Ripple />
+                                </a>
+                            )
                         ))}
                     </nav>
                     <div className="flex align-items-center gap-2">
@@ -250,11 +264,20 @@ const Landing = () => {
                 {menuAbierto && (
                     <div className="lg:hidden border-top-1 surface-border px-4 py-3 flex flex-column gap-3 surface-50">
                         {seccionesNav.map((item) => (
-                            <a key={item.href} href={item.href}
-                                className="font-medium no-underline py-2 text-700"
-                                onClick={() => setMenuAbierto(false)}>
-                                {item.etiqueta}
-                            </a>
+                            item.ruta ? (
+                                <button key={item.ruta}
+                                    className="font-medium border-none bg-transparent cursor-pointer text-left py-2 text-700 p-0"
+                                    style={{ fontFamily: 'inherit', fontSize: 'inherit' }}
+                                    onClick={() => { setMenuAbierto(false); navigate(item.ruta); }}>
+                                    {item.etiqueta}
+                                </button>
+                            ) : (
+                                <a key={item.href} href={item.href}
+                                    className="font-medium no-underline py-2 text-700"
+                                    onClick={() => setMenuAbierto(false)}>
+                                    {item.etiqueta}
+                                </a>
+                            )
                         ))}
                         <Divider className="my-1" />
                         <Button label="Ingresar" icon="pi pi-sign-in" rounded
@@ -722,15 +745,28 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* ══ NOTICIAS (solo si hay datos) ══════════════════════════════ */}
-            {noticias.length > 0 && (
-                <section id="noticias" className="py-8 px-4 lg:px-8">
-                    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-                        <div className="text-center mb-6">
-                            <h2 className="text-900 font-bold m-0" style={{ fontSize: '2.2rem' }}>Últimas Noticias</h2>
-                            <p className="text-600 text-xl mt-2">Información destacada de nuestra región</p>
-                            <Divider />
+            {/* ══ NOTICIAS ══════════════════════════════════════════════════ */}
+            <section id="noticias" className="py-8 px-4 lg:px-8">
+                <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+                    <div className="text-center mb-6">
+                        <h2 className="text-900 font-bold m-0" style={{ fontSize: '2.2rem' }}>Últimas Noticias</h2>
+                        <p className="text-600 text-xl mt-2">Información destacada de nuestra región</p>
+                        <Divider />
+                    </div>
+                    {cargandoNot ? (
+                        <div className="grid">
+                            {[1,2,3,4].map(i => (
+                                <div key={i} className="col-12 md:col-6 lg:col-3 p-3">
+                                    <Skeleton height="260px" borderRadius="12px" />
+                                </div>
+                            ))}
                         </div>
+                    ) : noticias.length === 0 ? (
+                        <div className="text-center py-6">
+                            <i className="pi pi-file-edit text-4xl text-300 mb-3 block" />
+                            <p className="text-500">No hay noticias publicadas aún</p>
+                        </div>
+                    ) : (
                         <div className="grid">
                             {noticias.map((n) => (
                                 <div key={n.id} className="col-12 md:col-6 lg:col-3 p-3">
@@ -761,19 +797,32 @@ const Landing = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                </section>
-            )}
+                    )}
+                </div>
+            </section>
 
-            {/* ══ EVENTOS (solo si hay datos) ════════════════════════════════ */}
-            {eventos.length > 0 && (
-                <section id="eventos" className="py-8 px-4 lg:px-8 surface-50">
-                    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-                        <div className="text-center mb-6">
-                            <h2 className="text-900 font-bold m-0" style={{ fontSize: '2.2rem' }}>Agenda de Eventos</h2>
-                            <p className="text-600 text-xl mt-2">Eventos y transmisiones de la emisora</p>
-                            <Divider />
+            {/* ══ EVENTOS ═══════════════════════════════════════════════════ */}
+            <section id="eventos" className="py-8 px-4 lg:px-8 surface-50">
+                <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+                    <div className="text-center mb-6">
+                        <h2 className="text-900 font-bold m-0" style={{ fontSize: '2.2rem' }}>Agenda de Eventos</h2>
+                        <p className="text-600 text-xl mt-2">Eventos y transmisiones de la emisora</p>
+                        <Divider />
+                    </div>
+                    {cargandoEv ? (
+                        <div className="grid">
+                            {[1,2,3,4].map(i => (
+                                <div key={i} className="col-12 md:col-6 lg:col-3 p-3">
+                                    <Skeleton height="240px" borderRadius="12px" />
+                                </div>
+                            ))}
                         </div>
+                    ) : eventos.length === 0 ? (
+                        <div className="text-center py-6">
+                            <i className="pi pi-calendar text-4xl text-300 mb-3 block" />
+                            <p className="text-500">No hay eventos próximos registrados</p>
+                        </div>
+                    ) : (
                         <div className="grid">
                             {eventos.map((ev) => {
                                 const fechaInicio = ev.fecha_inicio ? new Date(ev.fecha_inicio) : null;
@@ -817,9 +866,9 @@ const Landing = () => {
                                 );
                             })}
                         </div>
-                    </div>
-                </section>
-            )}
+                    )}
+                </div>
+            </section>
 
             {/* ══ CONTACTO ════════════════════════════════════════════════════ */}
             <section id="contacto" className="py-8 px-4 lg:px-8" style={{
