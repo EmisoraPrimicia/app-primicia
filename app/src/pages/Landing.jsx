@@ -351,9 +351,9 @@ const Landing = () => {
 
                         <h1 className="m-0 font-bold"
                             style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: 1.1, color: '#fff' }}>
-                            Emisora Digital<br />
-                            <span style={{ color: AMARILLO }}>Comunal</span><br />
-                            <span style={{ color: VERDE_CLARO, fontWeight: 300 }}>del Cesar</span>
+                            Emisora Digital Comunal<br />
+                            <span style={{ color: AMARILLO }}>Primicia</span><br />
+                            <span style={{ color: VERDE_CLARO, fontWeight: 300 }}>Comunal del Cesar</span>
                         </h1>
 
                         <p style={{ color: '#a8c89a', fontSize: '1.1rem', maxWidth: 460, margin: 0, lineHeight: 1.7 }}>
